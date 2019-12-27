@@ -1,0 +1,24 @@
+# Gradle
+/.gradle
+build/
+/run*/
+/classes/
+
+# IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# VIM
+*.swp
+
+# OS
+*/.DS_Store
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
