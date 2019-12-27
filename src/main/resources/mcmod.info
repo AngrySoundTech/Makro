@@ -1,0 +1,18 @@
+[
+  {
+    "modid": "civmaster",
+    "name": "CivMaster",
+    "description": ";)",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/AngrySoundTech/CivMaster",
+    "updateUrl": "",
+    "authors": [
+      "SoundTech"
+    ],
+    "credits": "adeadhead, the cutie ;)",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
