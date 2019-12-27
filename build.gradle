@@ -42,7 +42,7 @@ minecraft {
     mappings = "$forge_mappings"
     runDir = "run"
 
-    replaceIn "Constants.kt"
+    replaceIn "CivMaster.kt"
     replace "@VERSION@", project.version
 }
 
