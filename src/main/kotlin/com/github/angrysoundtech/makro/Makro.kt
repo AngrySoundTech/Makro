@@ -2,7 +2,9 @@ package com.github.angrysoundtech.makro
 
 import com.github.angrysoundtech.makro.api.Macro
 import com.github.angrysoundtech.makro.client.Proxy
-import de.swirtz.ktsrunner.objectloader.KtsObjectLoader
+import com.github.angrysoundtech.makro.scriptengine.KtsObjectLoader
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
 import net.minecraft.client.settings.KeyBinding
 import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.common.Mod
@@ -14,9 +16,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.InputEvent
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
 import org.lwjgl.input.Keyboard
 import java.nio.file.Files
 import java.nio.file.Paths
+import kotlin.system.measureTimeMillis
+import kotlinx.coroutines.launch
 
 @Mod(
         modid = Makro.ID,
@@ -57,9 +62,16 @@ object Makro {
 
     fun fireTheTest() {
         val scriptReader = Files.newBufferedReader(Paths.get("macros/test.kts"))
-        val loadedObj: Macro = KtsObjectLoader().load(scriptReader)
 
-        loadedObj.run()
+        setIdeaIoUseFallback()
+
+        GlobalScope.launch {
+            println(measureTimeMillis {
+                val loadedObj: Macro = KtsObjectLoader().load(scriptReader)
+
+                loadedObj.run()
+            })
+        }
     }
 
     val debugKey = KeyBinding("DEBUG KEY", Keyboard.KEY_V, "Makro")
