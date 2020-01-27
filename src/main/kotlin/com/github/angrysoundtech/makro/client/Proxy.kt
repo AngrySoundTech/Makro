@@ -1,4 +1,4 @@
-package com.github.angrysoundtech.civmaster.client
+package com.github.angrysoundtech.makro.client
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
