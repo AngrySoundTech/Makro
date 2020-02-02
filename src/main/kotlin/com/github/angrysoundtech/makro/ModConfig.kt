@@ -20,7 +20,7 @@ object ModConfig {
     @JvmField
     @Config.Comment("Macro root folder")
     @Config.LangKey("makro.config.folder")
-    var folder = Minecraft.getMinecraft().mcDataDir.canonicalPath + File.separator + "macros" + File.separator
+    var folder = Minecraft.getMinecraft().mcDataDir.canonicalPath + File.separator + "macros"
 
     fun update() {
         ConfigManager.sync(Makro.ID, Config.Type.INSTANCE)

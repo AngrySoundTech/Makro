@@ -44,6 +44,8 @@ object Makro {
 
     val logger: Logger = LogManager.getLogger(ID)
 
+    lateinit var keybindManager: KeybindManager
+
     @Mod.EventHandler
     fun preInit(event: FMLPreInitializationEvent) {
         proxy.preInit(event)
@@ -51,6 +53,7 @@ object Makro {
 
     @Mod.EventHandler
     fun init(event: FMLInitializationEvent) {
+        keybindManager = KeybindManager()
         ClientRegistry.registerKeyBinding(debugKey)
         proxy.init(event)
     }
