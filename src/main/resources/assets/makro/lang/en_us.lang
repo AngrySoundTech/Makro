@@ -1,3 +1,4 @@
 # Config
 makro.config.title=Makro Config
 makro.config.compileonstart=Compile On Start
+makro.config.folder=Macro root folder
