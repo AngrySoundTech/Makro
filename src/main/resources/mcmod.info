@@ -1,11 +1,11 @@
 [
   {
-    "modid": "civmaster",
-    "name": "CivMaster",
-    "description": ";)",
+    "modid": "makro",
+    "name": "Makro",
+    "description": "A based and redpilled Macro Client",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://github.com/AngrySoundTech/CivMaster",
+    "url": "https://github.com/AngrySoundTech/Makro",
     "updateUrl": "",
     "authors": [
       "SoundTech"
