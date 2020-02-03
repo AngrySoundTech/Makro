@@ -1,14 +1,12 @@
 package com.github.angrysoundtech.makro
 
-import com.github.angrysoundtech.makro.client.Proxy
 import net.minecraftforge.fml.common.Mod
-import net.minecraftforge.fml.common.SidedProxy
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
-import org.lwjgl.input.Keyboard
+import java.io.File
 
 @Mod(
         modid = Makro.ID,
@@ -26,26 +24,25 @@ object Makro {
     const val ID = "makro"
     const val VERSION = "@VERSION@"
 
-    @SidedProxy(clientSide = "com.github.angrysoundtech.makro.client.Proxy")
-    lateinit var proxy: Proxy
-
     val logger: Logger = LogManager.getLogger(ID)
 
     lateinit var keybindManager: KeybindManager
 
+    lateinit var configFolder: File
+
     @Mod.EventHandler
     fun preInit(event: FMLPreInitializationEvent) {
-        proxy.preInit(event)
+       configFolder = File(ModConfig.folder, ".makro")
     }
 
     @Mod.EventHandler
     fun init(event: FMLInitializationEvent) {
-        keybindManager = KeybindManager()
-        proxy.init(event)
+
+        keybindManager = KeybindManager(logger, File(configFolder, "keybinds.json"))
     }
 
     @Mod.EventHandler
     fun postInit(event: FMLPostInitializationEvent) {
-        proxy.postInit(event)
+
     }
 }
