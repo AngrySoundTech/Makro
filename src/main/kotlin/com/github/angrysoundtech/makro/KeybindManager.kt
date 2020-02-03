@@ -1,9 +1,7 @@
 package com.github.angrysoundtech.makro
 
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import org.lwjgl.input.Keyboard
 import java.io.File
 
 class KeybindManager {
@@ -11,7 +9,7 @@ class KeybindManager {
     private val file = File(ModConfig.folder + File.separator + ".makro" + File.separator + "keybinds.json")
     private val gson = GsonBuilder().setPrettyPrinting().create()
 
-    var keybinds = mapOf<Int, String>()
+    var keybinds = mutableMapOf<Int, String>()
 
     init {
         if (!file.exists()) {
@@ -37,5 +35,15 @@ class KeybindManager {
         file.createNewFile()
 
         file.writeText(gson.toJson(keybinds))
+    }
+
+    fun addKeyBinding(key: Int, script: String) {
+        keybinds[key] = script
+        save()
+    }
+
+    fun removeKeyBinding(key: Int) {
+        keybinds.remove(key)
+        save()
     }
 }
