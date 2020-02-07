@@ -13,14 +13,15 @@ import java.io.File
 object ModConfig {
 
     @JvmField
-    @Config.Comment("Should the macros be compiled on startup? If not, lazily.")
-    @Config.LangKey("makro.config.compileonstart")
-    var compileOnStart = true
-
-    @JvmField
     @Config.Comment("Macro root folder")
     @Config.LangKey("makro.config.folder")
+    @Config.RequiresMcRestart
     var folder = Minecraft.getMinecraft().mcDataDir.canonicalPath + File.separator + "macros"
+
+    @JvmField
+    @Config.Comment("Enable Development Mode. Macros recompile every run.")
+    @Config.LangKey("Makro.config.devmode")
+    var devMode = false
 
     fun update() {
         ConfigManager.sync(Makro.ID, Config.Type.INSTANCE)

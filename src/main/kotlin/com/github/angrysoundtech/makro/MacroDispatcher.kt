@@ -25,12 +25,11 @@ class MacroDispatcher(private val logger: Logger, private val macroFolder: File)
         macroFolder.walk()
                 .filter { it.extension == "kts" }
                 .map { it.path }
-                .forEach(this::compileMacro)
+                .forEach { compileMacro(it) }
     }
 
-    private fun compileMacro(path: String) {
-        GlobalScope.launch(Dispatchers.IO) {
-            logger.info("Pre-compiling Macro: $path")
+    private fun compileMacro(path: String) = GlobalScope.launch(Dispatchers.IO) {
+            logger.info("Compiling Macro: $path")
 
             val time = measureTimeMillis {
                 Files.newBufferedReader(Paths.get(path)).use {
@@ -38,16 +37,19 @@ class MacroDispatcher(private val logger: Logger, private val macroFolder: File)
                 }
             }
 
-            logger.info("Macro pre-compiled in ${time}ms: $path")
+            logger.info("Macro compiled in ${time}ms: $path")
         }
-    }
 
     fun fireMacro(path: String) {
-        val macro = macros[path]
-
-        if (macro != null) {
+        if (macros.containsKey(path)) {
             val job = GlobalScope.launch {
-                macro.run()
+
+                if (ModConfig.devMode) {
+                    compileMacro(path).join()
+                }
+
+                logger.info("Firing macro: $path")
+                macros[path]!!.run()
             }
 
             jobs.add(job)
