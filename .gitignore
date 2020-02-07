@@ -3,6 +3,7 @@
 build/
 /run*/
 /classes/
+logs/
 
 # IDEA
 .idea/

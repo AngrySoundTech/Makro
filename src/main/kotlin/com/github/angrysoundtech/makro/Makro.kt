@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import org.lwjgl.input.Keyboard
 import java.io.File
 
 @Mod(
@@ -27,6 +28,7 @@ object Makro {
     val logger: Logger = LogManager.getLogger(ID)
 
     lateinit var keybindManager: KeybindManager
+    lateinit var macroDispatcher: MacroDispatcher
 
     lateinit var configFolder: File
 
@@ -39,6 +41,7 @@ object Makro {
     fun init(event: FMLInitializationEvent) {
 
         keybindManager = KeybindManager(logger, File(configFolder, "keybinds.json"))
+        macroDispatcher = MacroDispatcher(logger, File(ModConfig.folder))
     }
 
     @Mod.EventHandler
