@@ -17,7 +17,9 @@ object MacroFireListener {
         val key = Keyboard.getEventKey()
 
         Makro.keybindManager.keybinds[key]?.let {
-            Makro.macroDispatcher.fireMacro(ModConfig.folder + File.separator + it)
+            if (Keyboard.isKeyDown(key)) {
+                Makro.macroDispatcher.fireMacro(ModConfig.folder + File.separator + it)
+            }
         }
     }
 }
