@@ -1,5 +1,7 @@
 package com.github.angrysoundtech.makro
 
+import com.github.angrysoundtech.makro.command.BindKeyCommand
+import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
@@ -29,18 +31,21 @@ object Makro {
     lateinit var keybindManager: KeybindManager
     lateinit var macroDispatcher: MacroDispatcher
 
+    lateinit var macroFolder: File
     lateinit var configFolder: File
 
     @Mod.EventHandler
     fun preInit(event: FMLPreInitializationEvent) {
-       configFolder = File(ModConfig.folder, ".makro")
+        macroFolder = File(ModConfig.folder)
+        configFolder = File(macroFolder, ".makro")
+
+        ClientCommandHandler.instance.registerCommand(BindKeyCommand())
     }
 
     @Mod.EventHandler
     fun init(event: FMLInitializationEvent) {
-
         keybindManager = KeybindManager(logger, File(configFolder, "keybinds.json"))
-        macroDispatcher = MacroDispatcher(logger, File(ModConfig.folder))
+        macroDispatcher = MacroDispatcher(logger, macroFolder)
     }
 
     @Mod.EventHandler
