@@ -2,8 +2,15 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
 }
 
+repositories {
+    jcenter()
+    maven {
+        url 'http://maven.shadowfacts.net/'
+    }
+}
+
 sourceSets {
-    scripts {
+    main {
         kotlin {
             srcDirs 'scripts'
         }
