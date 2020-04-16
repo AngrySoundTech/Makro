@@ -1,10 +1,9 @@
-package com.github.angrysoundtech.makro.api
+package com.github.angrysoundtech.makro.api.facade
 
 import com.github.angrysoundtech.makro.util.KeyBindUtil
-import kotlinx.coroutines.delay
 import net.minecraft.client.Minecraft
 
-object MovementFunctions {
+object MovementFacade {
 
     private val mc = Minecraft.getMinecraft()
 

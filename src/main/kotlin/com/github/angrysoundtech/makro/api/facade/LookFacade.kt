@@ -1,8 +1,8 @@
-package com.github.angrysoundtech.makro.api
+package com.github.angrysoundtech.makro.api.facade
 
 import net.minecraft.client.Minecraft
 
-object LookFunctions {
+object LookFacade {
 
     private val mc = Minecraft.getMinecraft()
 

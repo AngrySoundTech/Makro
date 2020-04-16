@@ -1,9 +1,9 @@
-package com.github.angrysoundtech.makro.api
+package com.github.angrysoundtech.makro.api.facade
 
 import com.github.angrysoundtech.makro.util.KeyBindUtil
 import net.minecraft.client.Minecraft
 
-object InteractFunctions {
+object InteractFacade {
 
     private val mc = Minecraft.getMinecraft()
 
