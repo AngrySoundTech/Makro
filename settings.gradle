@@ -1,1 +1,3 @@
-rootProject.name = 'CivMaster'
+rootProject.name = 'Makro'
+
+include 'examples'

@@ -1,0 +1,14 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+sourceSets {
+    scripts {
+        kotlin {
+            srcDirs 'scripts'
+        }
+        dependencies {
+            implementation rootProject
+        }
+    }
+}
