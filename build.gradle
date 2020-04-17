@@ -11,45 +11,55 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
 
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version "1.3.11"
+    id 'org.jetbrains.kotlin.jvm' version "$kotlin_version"
     id "com.github.hierynomus.license" version "0.15.0"
 }
 
-apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'net.minecraftforge.gradle'
 
 //////////////////
 // Dependencies //
 //////////////////
 
 repositories {
-    jcenter()
+    mavenCentral()
     maven {
-        url 'http://maven.shadowfacts.net/'
+        url 'https://files.minecraftforge.net/maven'
+    }
+    maven {
+        url 'https://minecraft.curseforge.com/api/maven/'
     }
 }
 
 dependencies {
-    compile group: 'net.shadowfacts', name: 'Forgelin', 'version': forgelin_version
+    minecraft group: 'net.minecraftforge', name: 'forge', 'version': "$minecraft_version-$forge_version"
 
-    compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', 'version': '1.3.11'
+    compile group: 'kottle', name: 'Kottle', 'version': kottle_version
+
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', 'version': kotlin_version
     //compile group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', 'version': '1.3.11'
-    compile group: 'org.jetbrains.kotlin', name: 'kotlin-script-runtime', 'version': '1.3.11'
-    compile group: 'org.jetbrains.kotlin', name: 'kotlin-compiler-embeddable', 'version': '1.3.11'
-    compile group: 'org.jetbrains.kotlin', name: 'kotlin-script-util', 'version': '1.3.11'
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-script-runtime', 'version': kotlin_version
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-compiler-embeddable', 'version': kotlin_version
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-script-util', 'version': kotlin_version
 }
 
 minecraft {
-    version = "$minecraft_version-$forge_version"
-    mappings = "$forge_mappings"
-    runDir = "run"
+    mappings channel: 'snapshot', version: forge_mappings
 
-    replaceIn "Makro.kt"
-    replace "@VERSION@", project.version
+    runs {
+        client {
+            mods {
+                makro {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
 }
 
 ///////////////
@@ -69,10 +79,10 @@ version = "$minecraft_version-$mod_version"
 
 processResources {
     inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+
     from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        include 'META-INF/mods.toml'
+        expand 'version':project.version
     }
 
     from(sourceSets.main.resources.srcDirs) {

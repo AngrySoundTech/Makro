@@ -1,3 +1,4 @@
 rootProject.name = 'Makro'
 
-include 'examples'
+// TODO build examples too
+// include 'examples'

@@ -3,7 +3,11 @@ plugins {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
+    mavenLocal()
+    maven {
+        url 'https://files.minecraftforge.net/maven'
+    }
     maven {
         url 'http://maven.shadowfacts.net/'
     }

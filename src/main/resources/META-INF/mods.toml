@@ -1,0 +1,10 @@
+modLoader="kotlinfml"
+loaderVersion="[1.4,)"
+
+[[mods]]
+    modId="makro"
+    version="${version}"
+    displayName="Makro"
+    description="A Macro Client."
+
+    side="CLIENT"

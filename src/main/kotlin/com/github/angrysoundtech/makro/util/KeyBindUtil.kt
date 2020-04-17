@@ -23,18 +23,18 @@
  */
 package com.github.angrysoundtech.makro.util
 
-import kotlinx.coroutines.delay
 import net.minecraft.client.settings.KeyBinding
+import net.minecraft.client.util.InputMappings
 import java.util.*
 import kotlin.concurrent.schedule
 
 object KeyBindUtil {
 
     fun holdKeybind(kb: KeyBinding, time: Long) {
-        holdKeybind(kb.keyCode, time)
+        holdKeybind(kb.key, time)
     }
 
-    fun holdKeybind(keycode: Int, time: Long) {
+    fun holdKeybind(keycode: InputMappings.Input, time: Long) {
         if (time == 0L) {
             KeyBinding.setKeyBindState(keycode, false)
             return

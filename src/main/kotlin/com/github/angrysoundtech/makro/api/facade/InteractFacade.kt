@@ -28,7 +28,7 @@ import net.minecraft.client.Minecraft
 
 object InteractFacade {
 
-    private val mc = Minecraft.getMinecraft()
+    private val mc = Minecraft.getInstance()
 
     fun attack(time: Long) {
         KeyBindUtil.holdKeybind(mc.gameSettings.keyBindAttack, time)

@@ -27,7 +27,7 @@ import net.minecraft.client.Minecraft
 
 object LookFacade {
 
-    private val mc = Minecraft.getMinecraft()
+    private val mc = Minecraft.getInstance()
 
     val SOUTH_YAW = 0F
     val WEST_YAW = 90F

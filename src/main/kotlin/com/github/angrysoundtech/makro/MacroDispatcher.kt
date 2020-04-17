@@ -67,7 +67,7 @@ class MacroDispatcher(private val logger: Logger, private val macroFolder: File)
         if (macros.containsKey(path)) {
             val job = GlobalScope.launch {
 
-                if (ModConfig.devMode) {
+                if (MakroConfig.CLIENT.devMode.get()) {
                     compileMacro(path).join()
                 }
 
@@ -82,6 +82,6 @@ class MacroDispatcher(private val logger: Logger, private val macroFolder: File)
     }
 
     fun cancelAll() {
-        jobs.forEach(Job::cancel)
+        jobs.forEach { it.cancel() }
     }
 }

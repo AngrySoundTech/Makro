@@ -28,7 +28,7 @@ import net.minecraft.client.Minecraft
 
 object MovementFacade {
 
-    private val mc = Minecraft.getMinecraft()
+    private val mc = Minecraft.getInstance()
 
     fun forward(time: Long) {
         KeyBindUtil.holdKeybind(mc.gameSettings.keyBindForward, time)

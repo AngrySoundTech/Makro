@@ -24,7 +24,7 @@
 package com.github.angrysoundtech.makro.api.facade
 
 import net.minecraft.client.Minecraft
-import net.minecraft.util.text.TextComponentString
+import net.minecraft.util.text.StringTextComponent
 
 /**
  * All things dealing with chat functionality.
@@ -40,7 +40,7 @@ object ChatFacade {
      * Only visible to the player.
      */
     fun log(text: String) {
-        Minecraft.getMinecraft().ingameGUI.chatGUI.printChatMessage(TextComponentString(text))
+        Minecraft.getInstance().ingameGUI.chatGUI.printChatMessage(StringTextComponent(text))
     }
 
     fun c(text: String) {

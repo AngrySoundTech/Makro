@@ -23,27 +23,19 @@
  */
 package com.github.angrysoundtech.makro
 
-import com.github.angrysoundtech.makro.command.BindKeyCommand
-import net.minecraftforge.client.ClientCommandHandler
+import net.minecraftforge.eventbus.api.SubscribeEvent
+import net.minecraftforge.fml.ModLoadingContext
 import net.minecraftforge.fml.common.Mod
-import net.minecraftforge.fml.common.event.FMLInitializationEvent
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
+import net.minecraftforge.fml.config.ModConfig
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import java.io.File
 
-@Mod(
-        modid = Makro.ID,
-        version = Makro.VERSION,
-        name = "Makro",
-        clientSideOnly = true,
-        canBeDeactivated = true,
-        modLanguageAdapter = "net.shadowfacts.forgelin.KotlinAdapter",
-        dependencies = "required-after:forgelin;"
-)
+
+@Mod(Makro.ID)
 @Suppress("MemberVisibilityCanBePrivate")
-@Mod.EventBusSubscriber(modid = Makro.ID)
+//@Mod.EventBusSubscriber(modid = Makro.ID)
 object Makro {
 
     const val ID = "makro"
@@ -57,22 +49,19 @@ object Makro {
     lateinit var macroFolder: File
     lateinit var configFolder: File
 
-    @Mod.EventHandler
-    fun preInit(event: FMLPreInitializationEvent) {
-        macroFolder = File(ModConfig.folder)
+    init {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, MakroConfig.CLIENT_SPEC)
+    }
+
+    @SubscribeEvent
+    fun clientSetup(event: FMLClientSetupEvent) {
+        macroFolder = File(MakroConfig.CLIENT.folder.get())
         configFolder = File(macroFolder, ".makro")
 
-        ClientCommandHandler.instance.registerCommand(BindKeyCommand())
-    }
+        // TODO
+        //ClientCommandHandler.instance.registerCommand(BindKeyCommand())
 
-    @Mod.EventHandler
-    fun init(event: FMLInitializationEvent) {
         keybindManager = KeybindManager(logger, File(configFolder, "keybinds.json"))
         macroDispatcher = MacroDispatcher(logger, macroFolder)
-    }
-
-    @Mod.EventHandler
-    fun postInit(event: FMLPostInitializationEvent) {
-
     }
 }
