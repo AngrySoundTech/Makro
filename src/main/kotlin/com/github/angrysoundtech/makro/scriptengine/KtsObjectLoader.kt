@@ -23,6 +23,9 @@
  */
 package com.github.angrysoundtech.makro.scriptengine
 
+import net.minecraft.client.Minecraft
+import org.jetbrains.kotlin.script.jsr223.KotlinJsr223JvmLocalScriptEngine
+import org.jetbrains.kotlin.script.jsr223.KotlinJsr223JvmLocalScriptEngineFactory
 import java.io.InputStream
 import java.io.Reader
 import javax.script.ScriptEngineManager
@@ -32,7 +35,13 @@ import javax.script.ScriptEngineManager
  */
 class KtsObjectLoader(classLoader: ClassLoader? = Thread.currentThread().contextClassLoader) {
 
-    val engine = ScriptEngineManager(classLoader).getEngineByExtension("kts")
+    val engine: KotlinJsr223JvmLocalScriptEngine
+
+    init {
+        val scriptEngineManager = ScriptEngineManager(Minecraft.getInstance().javaClass.classLoader)
+        scriptEngineManager.registerEngineExtension("kts", KotlinJsr223JvmLocalScriptEngineFactory())
+        engine = scriptEngineManager.getEngineByExtension("kts") as KotlinJsr223JvmLocalScriptEngine
+    }
 
     inline fun <R> safeEval(evaluation: () -> R?) = try {
         evaluation()
@@ -51,4 +60,3 @@ class KtsObjectLoader(classLoader: ClassLoader? = Thread.currentThread().context
 
     inline fun <reified T> loadAll(vararg inputStream: InputStream): List<T> = inputStream.map(::load)
 }
-

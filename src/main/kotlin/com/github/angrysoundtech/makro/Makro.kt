@@ -40,8 +40,8 @@ object Makro {
 
     val logger: Logger = LogManager.getLogger(ID)
 
-    var keybindManager: KeybindManager
-    var macroDispatcher: MacroDispatcher
+    lateinit var keybindManager: KeybindManager
+    lateinit var macroDispatcher: MacroDispatcher
 
     var macroFolder: File
     var configFolder: File
