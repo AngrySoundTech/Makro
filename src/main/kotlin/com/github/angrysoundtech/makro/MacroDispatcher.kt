@@ -54,16 +54,18 @@ class MacroDispatcher(private val logger: Logger, private val macroFolder: File)
     private fun compileMacro(path: String) = GlobalScope.launch(Dispatchers.IO) {
         logger.info("Compiling Macro: $path")
 
-        val time = measureTimeMillis {
-            Files.newBufferedReader(Paths.get(path)).use {
-                macros[path] = KtsObjectLoader().load(it)
+            val time = measureTimeMillis {
+                Files.newBufferedReader(Paths.get(path)).use {
+                    macros[path] = KtsObjectLoader().load(it)
+                }
             }
-        }
 
-        logger.info("Macro compiled in ${time}ms: $path")
+            logger.info("Macro compiled in ${time}ms: $path")
     }
 
     fun fireMacro(path: String) {
+        Makro.logger.debug("Firing Macro: $path")
+        macros.keys.forEach(::println)
         if (macros.containsKey(path)) {
             val job = GlobalScope.launch {
 
@@ -71,7 +73,6 @@ class MacroDispatcher(private val logger: Logger, private val macroFolder: File)
                     compileMacro(path).join()
                 }
 
-                logger.info("Firing macro: $path")
                 macros[path]!!.run()
             }
 

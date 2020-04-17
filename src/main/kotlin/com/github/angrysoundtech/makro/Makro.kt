@@ -35,26 +35,20 @@ import java.io.File
 
 @Mod(Makro.ID)
 @Suppress("MemberVisibilityCanBePrivate")
-//@Mod.EventBusSubscriber(modid = Makro.ID)
 object Makro {
-
     const val ID = "makro"
-    const val VERSION = "@VERSION@"
 
     val logger: Logger = LogManager.getLogger(ID)
 
-    lateinit var keybindManager: KeybindManager
-    lateinit var macroDispatcher: MacroDispatcher
+    var keybindManager: KeybindManager
+    var macroDispatcher: MacroDispatcher
 
-    lateinit var macroFolder: File
-    lateinit var configFolder: File
+    var macroFolder: File
+    var configFolder: File
 
     init {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, MakroConfig.CLIENT_SPEC)
-    }
 
-    @SubscribeEvent
-    fun clientSetup(event: FMLClientSetupEvent) {
         macroFolder = File(MakroConfig.CLIENT.folder.get())
         configFolder = File(macroFolder, ".makro")
 
