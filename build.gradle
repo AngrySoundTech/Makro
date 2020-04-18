@@ -20,6 +20,7 @@ buildscript {
 plugins {
     id 'org.jetbrains.kotlin.jvm' version "$kotlin_version"
     id "com.github.hierynomus.license" version "0.15.0"
+    id 'com.github.johnrengelman.shadow' version '4.0.4'
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -53,14 +54,6 @@ dependencies {
     embed group: 'org.jetbrains.kotlin', name: 'kotlin-scripting-compiler-embeddable', 'version': kotlin_version
     embed group: 'org.jetbrains.kotlin', name: 'kotlin-script-util', 'version': kotlin_version
 }
-
-//        include(dependency("org.jetbrains.kotlin:kotlin-script-runtime:$kotlin_version"))
-//        include(dependency("org.jetbrains.kotlin:kotlin-script-util:$kotlin_version"))
-//        include(dependency("org.jetbrains.kotlin:kotlin-scripting-common:$kotlin_version"))
-//        include(dependency("org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:$kotlin_version"))
-//        include(dependency("org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:$kotlin_version"))
-//        include(dependency("org.jetbrains.kotlin:kotlin-scripting-jvm:$kotlin_version"))
-//        include(dependency("org.jetbrains.intellij.deps:trove4j:1.0.2181211"))
 
 minecraft {
     mappings channel: 'snapshot', version: forge_mappings
@@ -107,65 +100,19 @@ processResources {
     }
 }
 
-//shadowJar {
-//    classifier = ''
-//
-//    // TODO: See how we can clean up / slim down this panicked mess of shading what I need
-//    dependencies {
-//        include(dependency("org.jetbrains.kotlin:kotlin-compiler-embeddable:$kotlin_version"))
-//        include(dependency("org.jetbrains.kotlin:kotlin-compiler-client-embeddable:$kotlin_version"))
-//        include(dependency("org.jetbrains.kotlin:kotlin-script-runtime:$kotlin_version"))
-//        include(dependency("org.jetbrains.kotlin:kotlin-script-util:$kotlin_version"))
-//        include(dependency("org.jetbrains.kotlin:kotlin-scripting-common:$kotlin_version"))
-//        include(dependency("org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:$kotlin_version"))
-//        include(dependency("org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:$kotlin_version"))
-//        include(dependency("org.jetbrains.kotlin:kotlin-scripting-jvm:$kotlin_version"))
-//        include(dependency("org.jetbrains.intellij.deps:trove4j:1.0.2181211"))
-//    }
-//}
+shadowJar {
+    classifier = ''
 
-// Custom task to generate the metadata files required for our dependencies
-task generateMetaFiles {
-    // Code for execution after the whole buildscript was parsed and loaded
-    doLast {
-        // Clear the dependencyMeta directory since we don't want old dependencies to still be listed in there
-        file("${buildDir}/dependencyMeta/").deleteDir()
-        configurations.embed.resolvedConfiguration.resolvedArtifacts.each {
-            // Create a meta file for each dependency in a specified directory
-            def metaFile = file("${buildDir}/dependencyMeta/${it.file.name}.meta")
-            metaFile.parentFile.mkdirs()
-            // Use the Gradle notation provided by the API ('group:artifact:version') for the meta file...
-            def artifactRef = it.moduleVersion.toString()
-            // ...and append the classifier if present
-            if (it.classifier != null) {
-                artifactRef += ":${it.classifier}"
-            }
-            // Write the artifact information to the meta file, to be used by the
-            metaFile.text = "Maven-Artifact: $artifactRef"
-        }
-    }
+    configurations = [project.configurations.embed]
+
+    relocate 'gnu.trove', 'com.github.angrysoundtech.makro.repack.trove'
 }
 
-jar {
-    into('/META-INF/libraries/') {
-        // Add all of the dependency JARs to the main JAR for later extraction
-        from configurations.embed
-        // Also include all dependency meta files
-        from "${buildDir}/dependencyMeta/"
-    }
-    manifest {
-        // The crucial manifest attribute: Make Forge extract the contained JARs
-        attributes 'ContainedDeps': configurations.embed.collect { it.name }.join(' ')
-    }
-    // Only run the main jar task after the meta files were built
-    dependsOn generateMetaFiles
+tasks.build.dependsOn shadowJar
+
+reobf {
+    shadowJar {}
 }
-
-//tasks.build.dependsOn shadowJar
-
-//reobf {
-//    shadowJar {}
-//}
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
