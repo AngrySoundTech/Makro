@@ -105,7 +105,14 @@ shadowJar {
 
     configurations = [project.configurations.embed]
 
-    relocate 'gnu.trove', 'com.github.angrysoundtech.makro.repack.trove'
+    relocate 'gnu', 'com.github.angrysoundtech.makro.repack.gnu'
+//    relocate 'javaslang', 'com.github.angrysoundtech.makro.repack.javaslang'
+//    relocate 'kotlin', 'com.github.angrysoundtech.makro.repack.kotlin'
+//    relocate 'kotlinx', 'com.github.angrysoundtech.makro.repack.kotlinx'
+//    relocate 'messages', 'com.github.angrysoundtech.makro.repack.messages'
+//    relocate 'misc', 'com.github.angrysoundtech.makro.repack.misc' // TODO what is this?
+//    relocate 'net', 'com.github.angrysoundtech.makro.repack.net'
+//    relocate 'org', 'com.github.angrysoundtech.makro.repack.org'
 }
 
 tasks.build.dependsOn shadowJar

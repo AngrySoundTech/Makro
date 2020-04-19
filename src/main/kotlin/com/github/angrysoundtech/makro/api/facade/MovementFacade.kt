@@ -30,36 +30,43 @@ object MovementFacade {
 
     private val mc = Minecraft.getInstance()
 
+    @JvmStatic
     fun forward(time: Long) {
         KeyBindUtil.holdKeybind(mc.gameSettings.keyBindForward, time)
         Thread.sleep(time)
     }
 
+    @JvmStatic
     fun back(time: Long) {
         KeyBindUtil.holdKeybind(mc.gameSettings.keyBindBack, time)
         Thread.sleep(time)
     }
 
+    @JvmStatic
     fun left(time: Long) {
         KeyBindUtil.holdKeybind(mc.gameSettings.keyBindLeft, time)
         Thread.sleep(time)
     }
 
+    @JvmStatic
     fun right(time: Long) {
         KeyBindUtil.holdKeybind(mc.gameSettings.keyBindRight, time)
         Thread.sleep(time)
     }
 
+    @JvmStatic
     fun jump() {
         if (mc.player.onGround) {
             mc.player.jump()
         }
     }
 
+    @JvmStatic
     fun sneak(time: Long) {
         KeyBindUtil.holdKeybind(mc.gameSettings.keyBindSneak, time)
     }
 
+    @JvmStatic
     fun sprint(bool: Boolean) {
         mc.player.isSprinting = bool
     }

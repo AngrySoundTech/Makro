@@ -39,11 +39,8 @@ object ChatFacade {
      * Log a raw string to the chat.
      * Only visible to the player.
      */
+    @JvmStatic
     fun log(text: String) {
         Minecraft.getInstance().ingameGUI.chatGUI.printChatMessage(StringTextComponent(text))
-    }
-
-    fun c(text: String) {
-        println(text)
     }
 }

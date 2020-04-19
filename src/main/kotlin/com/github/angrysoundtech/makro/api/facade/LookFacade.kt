@@ -29,21 +29,23 @@ object LookFacade {
 
     private val mc = Minecraft.getInstance()
 
-    val SOUTH_YAW = 0F
-    val WEST_YAW = 90F
-    val NORTH_YAW = -180F
-    val EAST_YAW = -90F
+    @JvmStatic val SOUTH_YAW = 0F
+    @JvmStatic val WEST_YAW = 90F
+    @JvmStatic val NORTH_YAW = -180F
+    @JvmStatic val EAST_YAW = -90F
+    @JvmStatic val STRAIGHT_PITCH = 0F
 
-    val STRAIGHT_PITCH = 0F
-
+    @JvmStatic
     fun getPitch(): Float {
         return mc.player.rotationPitch
     }
 
+    @JvmStatic
     fun getYaw(): Float {
         return mc.player.rotationYaw
     }
 
+    @JvmStatic
     fun look(yaw: Float, pitch: Float) {
         mc.player.rotationPitch = pitch
         mc.player.rotationYaw = yaw

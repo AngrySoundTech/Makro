@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.github.angrysoundtech.makro.scriptengine
+package com.github.angrysoundtech.makro.scriptengine.kotlin
 
+import com.github.angrysoundtech.makro.scriptengine.LoadException
 import net.minecraft.client.Minecraft
 import org.jetbrains.kotlin.script.jsr223.KotlinJsr223JvmLocalScriptEngine
 import org.jetbrains.kotlin.script.jsr223.KotlinJsr223JvmLocalScriptEngineFactory

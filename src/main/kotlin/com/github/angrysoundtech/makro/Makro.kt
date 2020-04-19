@@ -23,6 +23,7 @@
  */
 package com.github.angrysoundtech.makro
 
+import com.github.angrysoundtech.makro.dispatcher.JsMacroDispatcher
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.ModLoadingContext
 import net.minecraftforge.fml.common.Mod
@@ -40,8 +41,8 @@ object Makro {
 
     val logger: Logger = LogManager.getLogger(ID)
 
-    lateinit var keybindManager: KeybindManager
-    lateinit var macroDispatcher: MacroDispatcher
+    var keybindManager: KeybindManager
+    var macroDispatcher: JsMacroDispatcher
 
     var macroFolder: File
     var configFolder: File
@@ -56,6 +57,6 @@ object Makro {
         //ClientCommandHandler.instance.registerCommand(BindKeyCommand())
 
         keybindManager = KeybindManager(logger, File(configFolder, "keybinds.json"))
-        macroDispatcher = MacroDispatcher(logger, macroFolder)
+        macroDispatcher = JsMacroDispatcher(logger, macroFolder)
     }
 }
