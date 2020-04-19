@@ -32,7 +32,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.apache.logging.log4j.Logger
-import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
+//import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -50,7 +50,7 @@ class KotlinMacroDispatcher(private val logger: Logger, private val macroFolder:
     private val macros = mutableMapOf<String, Macro>()
 
     init {
-        setIdeaIoUseFallback()
+        //setIdeaIoUseFallback()
         loadMacros()
     }
 
@@ -66,7 +66,7 @@ class KotlinMacroDispatcher(private val logger: Logger, private val macroFolder:
 
         val time = measureTimeMillis {
             Files.newBufferedReader(Paths.get(path)).use {
-                macros[path] = KtsObjectLoader().load(it)
+                //macros[path] = KtsObjectLoader().load(it)
             }
         }
 

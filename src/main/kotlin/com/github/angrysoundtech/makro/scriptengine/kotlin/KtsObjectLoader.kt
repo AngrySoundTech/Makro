@@ -25,8 +25,8 @@ package com.github.angrysoundtech.makro.scriptengine.kotlin
 
 import com.github.angrysoundtech.makro.scriptengine.LoadException
 import net.minecraft.client.Minecraft
-import org.jetbrains.kotlin.script.jsr223.KotlinJsr223JvmLocalScriptEngine
-import org.jetbrains.kotlin.script.jsr223.KotlinJsr223JvmLocalScriptEngineFactory
+//import org.jetbrains.kotlin.script.jsr223.KotlinJsr223JvmLocalScriptEngine
+//import org.jetbrains.kotlin.script.jsr223.KotlinJsr223JvmLocalScriptEngineFactory
 import java.io.InputStream
 import java.io.Reader
 import javax.script.ScriptEngineManager
@@ -36,12 +36,12 @@ import javax.script.ScriptEngineManager
  */
 class KtsObjectLoader(classLoader: ClassLoader? = Thread.currentThread().contextClassLoader) {
 
-    val engine: KotlinJsr223JvmLocalScriptEngine
+//    val engine: KotlinJsr223JvmLocalScriptEngine
 
     init {
         val scriptEngineManager = ScriptEngineManager(Minecraft.getInstance().javaClass.classLoader)
-        scriptEngineManager.registerEngineExtension("kts", KotlinJsr223JvmLocalScriptEngineFactory())
-        engine = scriptEngineManager.getEngineByExtension("kts") as KotlinJsr223JvmLocalScriptEngine
+//        scriptEngineManager.registerEngineExtension("kts", KotlinJsr223JvmLocalScriptEngineFactory())
+//        engine = scriptEngineManager.getEngineByExtension("kts") as KotlinJsr223JvmLocalScriptEngine
     }
 
     inline fun <R> safeEval(evaluation: () -> R?) = try {
@@ -53,11 +53,11 @@ class KtsObjectLoader(classLoader: ClassLoader? = Thread.currentThread().context
     inline fun <reified T> Any?.castOrError() = takeIf { it is T }?.let { it as T }
             ?: throw IllegalArgumentException("Cannot cast $this to expected type ${T::class}")
 
-    inline fun <reified T> load(script: String): T = safeEval { engine.eval(script) }.castOrError()
+//    inline fun <reified T> load(script: String): T = safeEval { engine.eval(script) }.castOrError()
 
-    inline fun <reified T> load(reader: Reader): T = safeEval { engine.eval(reader) }.castOrError()
+//    inline fun <reified T> load(reader: Reader): T = safeEval { engine.eval(reader) }.castOrError()
 
-    inline fun <reified T> load(inputStream: InputStream): T = load(inputStream.reader())
+//    inline fun <reified T> load(inputStream: InputStream): T = load(inputStream.reader())
 
-    inline fun <reified T> loadAll(vararg inputStream: InputStream): List<T> = inputStream.map(::load)
+//    inline fun <reified T> loadAll(vararg inputStream: InputStream): List<T> = inputStream.map(::load)
 }
