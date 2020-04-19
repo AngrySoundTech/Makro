@@ -26,7 +26,7 @@ public class MakroConfig {
             }
 
             devMode = builder
-                    .comment("Enable development mode. Macros recompile every run")
+                    .comment("Enable developer features.")
                     .define("devMode", false);
         }
     }

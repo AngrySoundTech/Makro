@@ -21,33 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.github.angrysoundtech.makro.api.facade
+package com.github.angrysoundtech.makro.dispatcher
 
-import net.minecraft.client.Minecraft
+interface MacroDispatcher {
 
-object LookFacade {
-
-    private val mc = Minecraft.getInstance()
-
-    @JvmStatic val SOUTH_YAW = 0F
-    @JvmStatic val WEST_YAW = 90F
-    @JvmStatic val NORTH_YAW = -180F
-    @JvmStatic val EAST_YAW = -90F
-    @JvmStatic val STRAIGHT_PITCH = 0F
-
-    @JvmStatic
-    fun getPitch(): Float {
-        return mc.player.rotationPitch
-    }
-
-    @JvmStatic
-    fun getYaw(): Float {
-        return mc.player.rotationYaw
-    }
-
-    @JvmStatic
-    fun look(yaw: Float, pitch: Float) {
-        mc.player.rotationPitch = pitch
-        mc.player.rotationYaw = yaw
-    }
+    fun fireMacro(path: String)
 }

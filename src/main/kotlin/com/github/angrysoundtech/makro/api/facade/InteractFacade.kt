@@ -30,15 +30,18 @@ object InteractFacade {
 
     private val mc = Minecraft.getInstance()
 
+    @JvmStatic
     fun attack(time: Long) {
         KeyBindUtil.holdKeybind(mc.gameSettings.keyBindAttack, time)
         Thread.sleep(time)
     }
 
+    @JvmStatic
     fun use(time: Long = 100) {
         KeyBindUtil.holdKeybind(mc.gameSettings.keyBindUseItem, time)
     }
 
+    @JvmStatic
     fun eat() {
         use(3000)
     }

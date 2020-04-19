@@ -21,34 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.github.angrysoundtech.makro.scriptengine
+package com.github.angrysoundtech.makro.dispatcher
 
-import java.io.InputStream
-import java.io.Reader
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.apache.logging.log4j.Logger
+import java.io.File
+import java.nio.file.Files
+import java.nio.file.Paths
 import javax.script.ScriptEngineManager
 
-/**
- * This class is not thread-safe, don't use it for parallel executions and create new instances instead.
- */
-class KtsObjectLoader(classLoader: ClassLoader? = Thread.currentThread().contextClassLoader) {
+class JsMacroDispatcher(private val logger: Logger, private val macroFolder: File) : MacroDispatcher {
 
-    val engine = ScriptEngineManager(classLoader).getEngineByExtension("kts")
+    override fun fireMacro(path: String) {
+        logger.debug("Firing Macro: $path")
 
-    inline fun <R> safeEval(evaluation: () -> R?) = try {
-        evaluation()
-    } catch (e: Exception) {
-        throw LoadException("Cannot load script", e)
+        val job = GlobalScope.launch {
+            Files.newBufferedReader(Paths.get(path)).use {
+                ScriptEngineManager().getEngineByName("nashorn").eval(it)
+            }
+        }
     }
-
-    inline fun <reified T> Any?.castOrError() = takeIf { it is T }?.let { it as T }
-            ?: throw IllegalArgumentException("Cannot cast $this to expected type ${T::class}")
-
-    inline fun <reified T> load(script: String): T = safeEval { engine.eval(script) }.castOrError()
-
-    inline fun <reified T> load(reader: Reader): T = safeEval { engine.eval(reader) }.castOrError()
-
-    inline fun <reified T> load(inputStream: InputStream): T = load(inputStream.reader())
-
-    inline fun <reified T> loadAll(vararg inputStream: InputStream): List<T> = inputStream.map(::load)
 }
-
