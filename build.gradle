@@ -48,11 +48,6 @@ dependencies {
     minecraft group: 'net.minecraftforge', name: 'forge', 'version': "$minecraft_version-$forge_version"
 
     compile group: 'kottle', name: 'Kottle', 'version': kottle_version
-
-    embed group: 'org.jetbrains.kotlin', name: 'kotlin-compiler-embeddable', 'version': kotlin_version
-    embed group: 'org.jetbrains.kotlin', name: 'kotlin-compiler-client-embeddable', 'version': kotlin_version
-    embed group: 'org.jetbrains.kotlin', name: 'kotlin-scripting-compiler-embeddable', 'version': kotlin_version
-    embed group: 'org.jetbrains.kotlin', name: 'kotlin-script-util', 'version': kotlin_version
 }
 
 minecraft {
@@ -104,15 +99,6 @@ shadowJar {
     classifier = ''
 
     configurations = [project.configurations.embed]
-
-    relocate 'gnu', 'com.github.angrysoundtech.makro.repack.gnu'
-//    relocate 'javaslang', 'com.github.angrysoundtech.makro.repack.javaslang'
-//    relocate 'kotlin', 'com.github.angrysoundtech.makro.repack.kotlin'
-//    relocate 'kotlinx', 'com.github.angrysoundtech.makro.repack.kotlinx'
-//    relocate 'messages', 'com.github.angrysoundtech.makro.repack.messages'
-//    relocate 'misc', 'com.github.angrysoundtech.makro.repack.misc' // TODO what is this?
-//    relocate 'net', 'com.github.angrysoundtech.makro.repack.net'
-//    relocate 'org', 'com.github.angrysoundtech.makro.repack.org'
 }
 
 tasks.build.dependsOn shadowJar
