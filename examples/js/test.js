@@ -34,7 +34,7 @@ function moveTest() {
 
 function chatTest() {
     for (var i in [1,2]) {
-        ChatFacade.log("$i")
+        ChatFacade.log(i)
     }
 }
 
