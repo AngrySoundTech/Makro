@@ -27,7 +27,7 @@ class MacroSelectScreen : Screen(StringTextComponent("Select Macro to Bind")) {
                     addButton(GuiButtonExt(
                             xPos, yPos,
                             BUTTON_WIDTH,
-                            BUTTON_HEIGHT,
+                            BUTTON_HEIGHT / 2,
                             it,
                             ChooseMacroButton(it)
                     ))

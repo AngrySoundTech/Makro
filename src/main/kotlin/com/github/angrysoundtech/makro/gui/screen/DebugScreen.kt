@@ -20,22 +20,28 @@ class DebugScreen : Screen(StringTextComponent("Makro Functions")) {
         this.buttons.clear()
 
         val xPos = width / 2 - BUTTON_WIDTH / 2
-        val yPos = height / 4 + 8 - (BUTTON_HEIGHT + SEPARATION)
+        var yPos = height / 4 + 8 - (BUTTON_HEIGHT + SEPARATION)
 
         addButton(GuiButtonExt(
                 xPos, yPos,
                 BUTTON_WIDTH,
                 BUTTON_HEIGHT,
                 "Bind Macro",
-                BindMacroButton()
+                Button.IPressable {
+                    Minecraft.getInstance().displayGuiScreen(MacroSelectScreen())
+                }
         ))
-    }
 
-    class BindMacroButton : Button.IPressable {
+        yPos += BUTTON_HEIGHT + SEPARATION
 
-        override fun onPress(button: Button) {
-            Minecraft.getInstance().displayGuiScreen(MacroSelectScreen())
-        }
-
+        addButton(GuiButtonExt(
+                xPos, yPos,
+                BUTTON_WIDTH,
+                BUTTON_HEIGHT,
+                "Unbind Macro",
+                Button.IPressable {
+                    Minecraft.getInstance().displayGuiScreen(MacroUnbindScreen())
+                }
+        ))
     }
 }
