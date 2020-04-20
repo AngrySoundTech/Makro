@@ -55,9 +55,6 @@ object Makro {
         macroFolder = File(MakroConfig.CLIENT.folder.get())
         configFolder = File(macroFolder, ".makro")
 
-        // TODO
-        //ClientCommandHandler.instance.registerCommand(BindKeyCommand())
-
         keybindManager = KeybindManager(logger, File(configFolder, "keybinds.json"))
         macroDispatcher = JsMacroDispatcher(logger, macroFolder)
     }
