@@ -47,6 +47,8 @@ object Makro {
     var macroFolder: File
     var configFolder: File
 
+    val supportedExtensions = listOf("js")
+
     init {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, MakroConfig.CLIENT_SPEC)
 

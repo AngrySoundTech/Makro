@@ -32,7 +32,6 @@ import net.minecraftforge.fml.common.Mod
 import org.lwjgl.glfw.GLFW
 import java.io.File
 
-
 @Mod.EventBusSubscriber(modid = Makro.ID)
 object MacroFireListener {
 
